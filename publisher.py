@@ -1,4 +1,4 @@
-from config import Session, Message, get_rabbitmq_channel
+from config import Session, Message, get_rabbitmq_channel, redis_client
 from flask import Flask, request, jsonify, render_template
 import requests
 
@@ -28,6 +28,9 @@ def publish_message():
     
     # Kirim ke RabbitMQ
     channel.basic_publish(exchange='', routing_key='notification', body=message)
+    
+    # Kirim ke Redis
+    redis_client.publish('notification', message)
     
     return jsonify({"status": "Message sent and stored"})
 

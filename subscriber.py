@@ -1,6 +1,6 @@
 import pika
 import time
-from config import Session, Message, get_rabbitmq_channel
+from config import Session, Message, get_rabbitmq_channel, redis_client
 
 def consume_messages():
     session = Session()
